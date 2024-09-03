@@ -1,7 +1,9 @@
-import { UseTitles } from "../hooks/UseTitles";
+import { useTitle } from "../hooks/useTitle";
 import { ProductCard } from "../components";
+
 export const Home = () => {
-  UseTitles("Home");
+  useTitle("Home");
+
   const products = [
     {
       id: 1,
@@ -40,6 +42,7 @@ export const Home = () => {
       image: "/assets/images/1006.png",
     },
   ];
+
   return (
     <main>
       <section className="products">

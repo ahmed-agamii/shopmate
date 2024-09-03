@@ -1,20 +1,21 @@
 import { useContext, useReducer } from "react";
 import { createContext } from "react";
-import { cartReducers } from "../reducer/cartReducer";
+import { cartReducer } from "../reducer/cartReducer";
 
-const intialState = {
+const initialState = {
   cartList: [],
   total: 0,
 };
 
-const CartContext = createContext(intialState);
+const CartContext = createContext(initialState);
 
 export const CartProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(cartReducers, intialState);
+  const [state, dispatch] = useReducer(cartReducer, initialState);
 
   const addToCart = (product) => {
     const updatedCartList = state.cartList.concat(product);
     updateTotal(updatedCartList);
+
     dispatch({
       type: "ADD_TO_CART",
       payload: {
@@ -28,6 +29,7 @@ export const CartProvider = ({ children }) => {
       (current) => current.id !== product.id
     );
     updateTotal(updatedCartList);
+
     dispatch({
       type: "REMOVE_FROM_CART",
       payload: {
@@ -38,13 +40,12 @@ export const CartProvider = ({ children }) => {
 
   const updateTotal = (products) => {
     let total = 0;
-    products.forEach((product) => {
-      total += product.price;
-    });
+    products.forEach((product) => (total = total + product.price));
+
     dispatch({
       type: "UPDATE_TOTAL",
       payload: {
-        total: total,
+        total,
       },
     });
   };
@@ -61,6 +62,5 @@ export const CartProvider = ({ children }) => {
 
 export const useCart = () => {
   const context = useContext(CartContext);
-
   return context;
 };
