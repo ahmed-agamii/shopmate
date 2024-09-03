@@ -1,4 +1,4 @@
-import { useTitle } from "../hooks/useTitle";
+import { useTitle } from "../hooks/UseTitles";
 import { ProductCard } from "../components";
 
 export const Home = () => {
